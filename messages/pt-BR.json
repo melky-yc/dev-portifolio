@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "about": "Sobre",
+    "projects": "Projetos",
+    "experience": "Experiência",
+    "skills": "Habilidades",
+    "contact": "Contato"
+  },
+  "hero": {
+    "name": "Melchisedek Lima",
+    "role": "Desenvolvedor Full Stack",
+    "student": "Estudante de Ciencia da Computação",
+    "location": "Teresina, Brasil",
+    "cta_projects": "Ver Projetos",
+    "cta_cv": "Baixar CV"
+  },
+  "about": {
+    "title": "Sobre",
+    "subtitle": "Conheca um pouco mais sobre mim",
+    "who": "Quem sou?",
+    "who_text": "Sou Melchisedek Lima, desenvolvedor Full Stack com foco em backend e estudante de Ciencia da Computação. Tenho paixao por resolver problemas complexos com codigo limpo e bem estruturado. Minha experiencia combina desenvolvimento de software com ensino de tecnologia, o que me deu uma visao unica sobre comunicacao tecnica e arquitetura de sistemas.",
+    "what": "O que faço?",
+    "what_text": "Especializo-me em desenvolvimento backend com Java e Spring Boot, construindo APIs REST robustas, modelagem de dados com PostgreSQL e MySQL, e integração de sistemas. Também atuo no frontend com Angular e React, entregando soluções completas de ponta a ponta.",
+    "vision": "Minha visão",
+    "vision_text": "Acredito que bom software nasce de boas práticas. Sou orientado por arquitetura limpa, princípios SOLID, testes e melhoria contínua. Meu objetivo é evoluir como engenheiro de software contribuindo para projetos que impactem positivamente pessoas e negócios.",
+    "education": "Formação",
+    "education_text": "Bacharelado em Ciência da Computação — UNINASSAU (2025–2028). Complemento minha formação acadêmica com certificações, projetos pessoais e aprendizado autodidata constante."
+  },
+  "experience": {
+    "title": "Experiência",
+    "subtitle": "Minha trajetória profissional",
+    "items": [
+      {
+        "period": "Fev 2026 – Atual",
+        "company": "Medsafe Brasil",
+        "role": "Estagiário Full Stack Developer",
+        "bullets": [
+          "Desenvolvimento de funcionalidades full stack com Java, Spring Boot e Angular",
+          "Manutenção e evolução de APIs REST e integração com PostgreSQL",
+          "Participação em code reviews e adoção de boas práticas de desenvolvimento"
+        ]
+      },
+      {
+        "period": "Jan 2026 – Mar 2026",
+        "company": "Medsafe Brasil",
+        "role": "Estagiário TI – Suporte Técnico",
+        "bullets": [
+          "Suporte técnico a equipes internas e resolução de incidentes",
+          "Documentação de processos e manutenção de infraestrutura de TI"
+        ]
+      },
+      {
+        "period": "Ago 2025 – Jan 2026",
+        "company": "ConfereAI",
+        "role": "Desenvolvedor de Software",
+        "bullets": [
+          "Desenvolvimento de funcionalidades full stack com React e NodeJS",
+          "Desenvolvimento de features backend em Java com Spring Boot",
+          "Implementação de lógica de negócios e integração com banco de dados",
+          "Colaboração em equipe ágil com entregas semanais"
+        ]
+      },
+      {
+        "period": "Nov 2025 – Jan 2026",
+        "company": "Faculdade FACETEC",
+        "role": "Professor / Instrutor de TI",
+        "bullets": [
+          "Instrução de turmas em fundamentos de programação e lógica computacional",
+          "Elaboração de materiais didáticos e avaliações práticas"
+        ]
+      },
+      {
+        "period": "Set 2025 – Dez 2025",
+        "company": "Grau Tecnico",
+        "role": "Professor / Instrutor de TI",
+        "bullets": [
+          "Ensino de disciplinas tecnicas em informática e programação básica",
+          "Acompanhamento individual de alunos e suporte em projetos práticos e de pesquisa"
+        ]
+      },
+      {
+        "period": "Fev 2025 – Mai 2025",
+        "company": "Espaco de Ballet Renascer",
+        "role": "Suporte Técnico",
+        "bullets": [
+          "Manutenção de equipamentos e suporte técnico geral",
+          "Organização e automação de processos administrativos e de gerenciamento de eventos"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "title": "Habilidades",
+    "subtitle": "Tecnologias e ferramentas que domino e que estou aprendendo",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "database": "Banco de Dados",
+    "tools": "Ferramentas & DevOps",
+    "soft_title": "Soft Skills",
+    "soft_skills": [
+      "Resolução de Problemas",
+      "Comunicação Técnica",
+      "Proatividade",
+      "Liderança de Iniciativas",
+      "Autodidatismo",
+      "Pensamento Analítico"
+    ]
+  },
+  "projects": {
+    "title": "Projetos",
+    "subtitle": "Alguns dos meus trabalhos recentes",
+    "view": "Ver Projeto",
+    "view_all": "Ver todos os projetos",
+    "items": [
+      {
+        "slug": "taskflow-reports",
+        "title": "Taskflow Reports",
+        "description": "Sistema interno de gerenciamento e rastreabilidade de demandas técnicas, com controle de relatórios operacionais e automação de processos.",
+        "stacks": ["React", "Next.js", "PostgreSQL", "Supabase", "REST API"],
+        "overview": "O Taskflow Reports é um sistema completo de gerenciamento de demandas desenvolvido para otimizar o fluxo de trabalho operacional de equipes técnicas.",
+        "problem": "Equipes técnicas frequentemente lidam com rastreabilidade fragmentada de demandas, relatórios manuais e falta de visibilidade sobre o progresso de tarefas críticas.",
+        "decisions": "A arquitetura foi construída com Spring Boot no backend, garantindo robustez e escalabilidade. O frontend em React oferece uma interface responsiva e intuitiva. PostgreSQL foi escolhido pela confiabilidade em modelagem relacional complexa.",
+        "challenges": "O principal desafio foi modelar o sistema de permissões e níveis de acesso sem comprometer a performance das consultas. A solução envolveu uso estratégico de JPA com queries otimizadas.",
+        "results": "Redução de 40% no tempo de geração de relatórios e melhoria significativa na rastreabilidade de demandas da equipe."
+      },
+      {
+        "slug": "face-presence",
+        "title": "FacePresence",
+        "description": "Aplicação web integrada a serviços backend para controle de presença com reconhecimento facial em tempo real.",
+        "stacks": ["React", "Spring Boot", "REST API", "MySQL", "WebSocket"],
+        "overview": "O FacePresence é uma solução inovadora de controle de presença que utiliza reconhecimento facial para automatizar o registro de entrada e saída.",
+        "problem": "Sistemas tradicionais de controle de presença são suscetíveis a fraudes e demandam tempo manual significativo para gerenciamento.",
+        "decisions": "React foi escolhido para o frontend por ser uma biblioteca robusta para aplicativos empresariais. WebSocket permite comunicação em tempo real entre câmera e servidor. O backend em Spring Boot processa os dados faciais com integração a serviços de ML.",
+        "challenges": "Integrar o fluxo de reconhecimento facial em tempo real com latência mínima foi o maior desafio técnico. A solução envolveu otimização do pipeline de dados via WebSocket.",
+        "results": "Sistema funcional com taxa de reconhecimento acima de 95% e tempo médio de verificação inferior a 2 segundos."
+      },
+      {
+        "slug": "acad-sheet",
+        "title": "AcadSheet Automation",
+        "description": "Sistema de planilhas automatizadas para controle acadêmico, reduzindo 30% do tempo em tarefas administrativas manuais.",
+        "stacks": ["Excel", "Office 365", "Automação", "VBA"],
+        "overview": "O AcadSheet Automation é uma solução de automação de planilhas desenvolvida para instituições de ensino que precisam otimizar seus processos acadêmicos.",
+        "problem": "Instituições de ensino gastam horas por semana em tarefas manuais de preenchimento, cálculo de notas e geração de relatórios acadêmicos.",
+        "decisions": "A escolha por VBA e Office 365 foi estratégica, pois permite integração direta com ferramentas já utilizadas pelas instituições, sem necessidade de infraestrutura adicional.",
+        "challenges": "Garantir compatibilidade entre diferentes versões do Excel e lidar com volumes variados de dados sem comprometer a performance das macros.",
+        "results": "Redução de 30% no tempo gasto em tarefas administrativas e eliminação de erros manuais no cálculo de notas e frequências."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contato",
+    "headline": "Vamos trabalhar juntos?",
+    "subtitle": "Estou disponível para oportunidades de trabalho, freelance ou apenas para trocar uma ideia sobre tecnologia!",
+    "name": "Nome",
+    "email": "E-mail",
+    "message": "Mensagem",
+    "send": "Enviar Mensagem!",
+    "name_placeholder": "Seu nome",
+    "email_placeholder": "seu@email.com",
+    "message_placeholder": "Escreva sua mensagem...",
+    "send_success": "Mensagem enviada com sucesso!",
+    "send_error": "Não foi possível enviar. Tente novamente.",
+    "rate_limit": "Aguarde um minuto antes de enviar novamente.",
+    "name_error": "Mínimo 2 caracteres",
+    "email_error": "E-mail inválido",
+    "message_error": "Mensagem deve ter entre 10 e 5000 caracteres"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados.",
+    "made_with": "Feito com Next.js, Tailwind e Framer Motion"
+  },
+  "project_page": {
+    "back": "Projetos",
+    "overview": "Visão Geral",
+    "problem": "Problema que Resolve",
+    "decisions": "Decisões Técnicas",
+    "challenges": "Desafios e Aprendizagens",
+    "results": "Resultados",
+    "github": "GitHub",
+    "demo": "Demo"
+  }
+}

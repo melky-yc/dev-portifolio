@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "experience": "Experience",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Melchisedek Lima",
+    "role": "Full Stack Developer",
+    "specialty": "Backend Specialist",
+    "student": "Computer Science Student",
+    "location": "Teresina, Brazil",
+    "cta_projects": "View Projects",
+    "cta_cv": "Download CV"
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "Get to know a little more about me",
+    "who": "Who I am",
+    "who_text": "I'm Melchisedek Lima, a Full Stack developer focused on backend and a Computer Science student. I'm passionate about solving complex problems with clean, well-structured code. My experience combines software development with technology teaching, which gave me a unique perspective on technical communication and system architecture.",
+    "what": "What I do",
+    "what_text": "I specialize in backend development with Java and Spring Boot, building robust REST APIs, data modeling with PostgreSQL and MySQL, and system integration. I also work on the frontend with Angular and React, delivering complete end-to-end solutions.",
+    "vision": "My vision",
+    "vision_text": "I believe that good software comes from good practices. I'm guided by clean architecture, SOLID principles, testing, and continuous improvement. My goal is to evolve as a software engineer contributing to projects that positively impact people and businesses.",
+    "education": "Education",
+    "education_text": "Bachelor's in Computer Science — UNINASSAU (2025–2028). I complement my academic education with certifications, personal projects, and constant self-directed learning."
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "My professional journey",
+    "items": [
+      {
+        "period": "Feb 2026 – Present",
+        "company": "Medsafe Brasil",
+        "role": "Full Stack Developer Intern",
+        "bullets": [
+          "Full stack feature development with Java, Spring Boot, and Angular",
+          "Maintenance and evolution of REST APIs and PostgreSQL integration",
+          "Participation in code reviews and adoption of development best practices"
+        ]
+      },
+      {
+        "period": "Jan 2026 – Mar 2026",
+        "company": "Medsafe Brasil",
+        "role": "IT Intern – Technical Support",
+        "bullets": [
+          "Technical support for internal teams and incident resolution",
+          "Process documentation and IT infrastructure maintenance"
+        ]
+      },
+      {
+        "period": "Aug 2025 – Jan 2026",
+        "company": "ConfereAI",
+        "role": "Software Developer",
+        "bullets": [
+          "Backend feature development in Java with Spring Boot",
+          "Business logic implementation and database integration",
+          "Agile team collaboration with weekly deliveries"
+        ]
+      },
+      {
+        "period": "Nov 2025 – Jan 2026",
+        "company": "FACETEC College",
+        "role": "Professor / IT Instructor",
+        "bullets": [
+          "Teaching programming fundamentals and computational logic",
+          "Creating educational materials and practical assessments"
+        ]
+      },
+      {
+        "period": "Sep 2025 – Dec 2025",
+        "company": "Grau Tecnico",
+        "role": "Professor / IT Instructor",
+        "bullets": [
+          "Teaching technical subjects in computer science and basic programming",
+          "Individual student support and practical project guidance and research"
+        ]
+      },
+      {
+        "period": "Feb 2025 – May 2025",
+        "company": "Espaco de Ballet Renascer",
+        "role": "Technical Support",
+        "bullets": [
+          "Equipment maintenance and general technical support",
+          "Organization and automation of administrative processes and event management"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Technologies and tools I master and that I'm learning",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "database": "Database",
+    "tools": "Tools & DevOps",
+    "soft_title": "Soft Skills",
+    "soft_skills": [
+      "Problem Solving",
+      "Technical Communication",
+      "Proactivity",
+      "Initiative Leadership",
+      "Self-Learning",
+      "Analytical Thinking"
+    ]
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Some of my recent work",
+    "view": "View Project",
+    "view_all": "View all projects",
+    "items": [
+      {
+        "slug": "taskflow-reports",
+        "title": "Taskflow Reports",
+        "description": "Internal system for task management and traceability of technical demands, with operational report control and process automation.",
+        "stacks": ["Java", "Spring Boot", "PostgreSQL", "React", "REST API"],
+        "overview": "Taskflow Reports is a complete demand management system developed to optimize the operational workflow of technical teams.",
+        "problem": "Technical teams often deal with fragmented demand traceability, manual reports, and lack of visibility over the progress of critical tasks.",
+        "decisions": "The architecture was built with Spring Boot on the backend, ensuring robustness and scalability. The React frontend offers a responsive and intuitive interface. PostgreSQL was chosen for its reliability in complex relational modeling.",
+        "challenges": "The main challenge was modeling the permissions system and access levels without compromising query performance. The solution involved strategic use of JPA with optimized queries.",
+        "results": "40% reduction in report generation time and significant improvement in team demand traceability."
+      },
+      {
+        "slug": "face-presence",
+        "title": "FacePresence",
+        "description": "Web application integrated with backend services for attendance control with real-time facial recognition.",
+        "stacks": ["Angular", "Spring Boot", "REST API", "MySQL", "WebSocket"],
+        "overview": "FacePresence is an innovative attendance control solution that uses facial recognition to automate entry and exit registration.",
+        "problem": "Traditional attendance control systems are susceptible to fraud and require significant manual time for management.",
+        "decisions": "Angular was chosen for the frontend due to its robustness in enterprise applications. WebSocket enables real-time communication between camera and server. The Spring Boot backend processes facial data with ML service integration.",
+        "challenges": "Integrating real-time facial recognition flow with minimal latency was the biggest technical challenge. The solution involved data pipeline optimization via WebSocket.",
+        "results": "Functional system with recognition rate above 95% and average verification time under 2 seconds."
+      },
+      {
+        "slug": "acad-sheet",
+        "title": "AcadSheet Automation",
+        "description": "Automated spreadsheet system for academic control, reducing 30% of time on manual administrative tasks.",
+        "stacks": ["Excel", "Office 365", "Automation", "VBA"],
+        "overview": "AcadSheet Automation is a spreadsheet automation solution developed for educational institutions that need to optimize their academic processes.",
+        "problem": "Educational institutions spend hours per week on manual tasks of filling in, calculating grades, and generating academic reports.",
+        "decisions": "The choice of VBA and Office 365 was strategic, as it allows direct integration with tools already used by institutions, without the need for additional infrastructure.",
+        "challenges": "Ensuring compatibility between different Excel versions and handling varying data volumes without compromising macro performance.",
+        "results": "30% reduction in time spent on administrative tasks and elimination of manual errors in grade and attendance calculations."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "headline": "Let's work together?",
+    "subtitle": "I'm available for job opportunities, freelance, or just to chat about technology.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "name_placeholder": "Your name",
+    "email_placeholder": "your@email.com",
+    "message_placeholder": "Write your message...",
+    "send_success": "Message sent successfully!",
+    "send_error": "Could not send. Please try again.",
+    "rate_limit": "Please wait a minute before sending again.",
+    "name_error": "At least 2 characters",
+    "email_error": "Invalid email",
+    "message_error": "Message must be between 10 and 5000 characters"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "made_with": "Made with Next.js, Tailwind & Framer Motion"
+  },
+  "project_page": {
+    "back": "Projects",
+    "overview": "Overview",
+    "problem": "Problem it Solves",
+    "decisions": "Technical Decisions",
+    "challenges": "Challenges & Learnings",
+    "results": "Results",
+    "github": "GitHub",
+    "demo": "Demo"
+  }
+}
