@@ -2,6 +2,20 @@
 
 Portfólio de Melchisedek Lima — Desenvolvedor Full Stack. Next.js, React, Tailwind CSS, Framer Motion.
 
+## Subir para o GitHub
+
+Se o repositório ainda não existir no GitHub:
+
+1. Crie um repositório em [github.com/new](https://github.com/new) com o nome **dev-portfolio** (público, sem README).
+2. Na pasta do projeto, rode:
+
+```bash
+git remote add origin https://github.com/SEU_USUARIO/dev-portfolio.git
+git push -u origin main
+```
+
+Substitua `SEU_USUARIO` pelo seu usuário do GitHub.
+
 ## Rodar localmente
 
 ```bash
