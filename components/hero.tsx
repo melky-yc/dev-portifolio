@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowDown, Download } from "lucide-react"
 import { motion } from "framer-motion"
 import { TechMarquee } from "@/components/tech-marquee"
+import Link from "next/link"
 
 const container = {
   hidden: {},
@@ -101,10 +102,10 @@ export function Hero() {
             </a>
           </Button>
           <Button asChild variant="outline" size="lg" className="gap-2">
-            <a href="/public/pdf/cv-melchisedeksl.pdf" download>
+            <Link href="/pdf/cv-melchisedeksl.pdf" target="_blank">
               {t("hero.cta_cv")}
               <Download className="h-4 w-4" />
-            </a>
+            </Link>
           </Button>
         </motion.div>
       </motion.div>
