@@ -124,15 +124,15 @@
         "results": "Redução de 40% no tempo de geração de relatórios e melhoria significativa na rastreabilidade de demandas da equipe."
       },
       {
-        "slug": "face-presence",
-        "title": "FacePresence",
-        "description": "Aplicação web integrada a serviços backend para controle de presença com reconhecimento facial em tempo real.",
-        "stacks": ["React", "Spring Boot", "REST API", "MySQL", "WebSocket"],
-        "overview": "O FacePresence é uma solução inovadora de controle de presença que utiliza reconhecimento facial para automatizar o registro de entrada e saída.",
-        "problem": "Sistemas tradicionais de controle de presença são suscetíveis a fraudes e demandam tempo manual significativo para gerenciamento.",
-        "decisions": "React foi escolhido para o frontend por ser uma biblioteca robusta para aplicativos empresariais. WebSocket permite comunicação em tempo real entre câmera e servidor. O backend em Spring Boot processa os dados faciais com integração a serviços de ML.",
-        "challenges": "Integrar o fluxo de reconhecimento facial em tempo real com latência mínima foi o maior desafio técnico. A solução envolveu otimização do pipeline de dados via WebSocket.",
-        "results": "Sistema funcional com taxa de reconhecimento acima de 95% e tempo médio de verificação inferior a 2 segundos."
+        "slug": "confere-ai",
+        "title": "Confere AI",
+        "description": "Sistema web de registro de ponto com reconhecimento facial, análise de microexpressões e métricas biométricas em tempo real.",
+        "stacks": ["React", "TypeScript", "Tailwind CSS", "Python", "ML Services", "REST API", "API Gemini", "WebRTC"],
+        "overview": "O Confere AI é uma plataforma de controle de presença baseada em visão computacional. A aplicação realiza detecção facial em tempo real, aplica malha facial (facial mesh), extrai métricas biométricas e possibilita análise emocional por IA durante o processo de autenticação.",
+        "problem": "Sistemas convencionais de registro de ponto dependem de autenticação manual (cartão, senha ou biometria simples), o que permite fraudes como marcação por terceiros e não oferece validação comportamental ou análise contextual do usuário.",
+        "decisions": "Next.js foi adotado para garantir performance e organização estrutural no frontend. WebRTC viabiliza captura de vídeo em tempo real diretamente no navegador. A utilização de Face Mesh permite extração precisa de landmarks faciais. O backend em Spring Boot foi estruturado para suportar autenticação, persistência de registros e futura escalabilidade com serviços de machine learning.",
+        "challenges": "Garantir baixa latência na renderização da malha facial e no processamento das métricas biométricas foi o principal desafio técnico. A solução envolveu processamento client-side otimizado e controle eficiente do ciclo de renderização para manter fluidez em tempo real.",
+        "results": "Sistema funcional com autenticação biométrica em tempo real, exibição dinâmica de métricas faciais e arquitetura preparada para expansão com modelos avançados de análise emocional."
       },
       {
         "slug": "acad-sheet",

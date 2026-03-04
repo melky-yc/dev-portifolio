@@ -2,10 +2,12 @@
 
 import { useTranslation, useI18n } from "@/lib/i18n"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, ClipboardList, ScanFace, FileSpreadsheet, LayoutGrid } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { projects } from "@/lib/projects"
 
 const sectionHeader = {
   hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
@@ -37,7 +39,7 @@ const cardReveal = {
 
 const projectIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "taskflow-reports": ClipboardList,
-  "face-presence": ScanFace,
+  "confere-ai": ScanFace,
   "acad-sheet": FileSpreadsheet,
 }
 
@@ -85,26 +87,42 @@ export function Projects() {
           viewport={{ once: true, margin: "-50px" }}
         >
           {items.map((project) => {
+            const projectMeta = projects.find((p) => p.slug === project.slug)
             const Icon = projectIcons[project.slug] || ClipboardList
+            const imageSrc = projectMeta?.image ? `/projects/${projectMeta.image}` : null
             return (
-              <motion.div key={project.slug} variants={cardReveal}>
+              <motion.div
+                key={project.slug}
+                variants={cardReveal}
+                className="h-full"
+              >
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="group block overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:border-muted-foreground/30 hover:shadow-lg"
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:border-muted-foreground/30 hover:shadow-lg"
                 >
-                  <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-secondary">
-                    <Icon className="h-12 w-12 text-muted-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-foreground/70" />
+                  <div className="relative flex shrink-0 aspect-video items-center justify-center overflow-hidden bg-secondary">
+                    {imageSrc ? (
+                      <Image
+                        src={imageSrc}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <Icon className="h-12 w-12 text-muted-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-foreground/70" />
+                    )}
                     <div className="absolute inset-0 bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/5" />
                   </div>
 
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6 min-h-0">
                     <h3 className="text-lg font-semibold text-foreground">
                       {project.title}
                     </h3>
                     <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                       {project.description}
                     </p>
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <div className="mt-4 flex flex-1 flex-wrap content-start gap-2 min-h-[2.5rem]">
                       {project.stacks.map((stack) => (
                         <Badge
                           key={stack}
@@ -115,7 +133,7 @@ export function Projects() {
                         </Badge>
                       ))}
                     </div>
-                    <div className="mt-6 flex items-center gap-1.5 text-sm font-medium text-foreground">
+                    <div className="mt-6 flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground">
                       {t("projects.view")}
                       <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                     </div>

@@ -2,6 +2,7 @@
 
 import { useTranslation, useI18n } from "@/lib/i18n"
 import { motion } from "framer-motion"
+import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,7 +18,7 @@ import { projects } from "@/lib/projects"
 
 const projectIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "taskflow-reports": ClipboardList,
-  "face-presence": ScanFace,
+  "confere-ai": ScanFace,
   "acad-sheet": FileSpreadsheet,
 }
 
@@ -65,6 +66,7 @@ export function ProjectDetail({ slug }: { slug: string }) {
   }
 
   const Icon = projectIcons[slug] || ClipboardList
+  const imageSrc = projectMeta?.image ? `/projects/${projectMeta.image}` : null
 
   const sections = [
     { key: "overview", title: t("project_page.overview"), text: projectData.overview },
@@ -93,13 +95,24 @@ export function ProjectDetail({ slug }: { slug: string }) {
         </motion.div>
 
         <motion.div
-          className="mt-8 flex aspect-video items-center justify-center rounded-lg bg-secondary"
+          className="relative mt-8 flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-secondary"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={1}
         >
-          <Icon className="h-20 w-20 text-muted-foreground" />
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 672px"
+              className="object-cover"
+              priority
+            />
+          ) : (
+            <Icon className="h-20 w-20 text-muted-foreground" />
+          )}
         </motion.div>
 
         <motion.h1

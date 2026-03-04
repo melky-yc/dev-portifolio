@@ -124,15 +124,15 @@
         "results": "40% reduction in report generation time and significant improvement in team demand traceability."
       },
       {
-        "slug": "face-presence",
-        "title": "FacePresence",
-        "description": "Web application integrated with backend services for attendance control with real-time facial recognition.",
-        "stacks": ["Angular", "Spring Boot", "REST API", "MySQL", "WebSocket"],
-        "overview": "FacePresence is an innovative attendance control solution that uses facial recognition to automate entry and exit registration.",
-        "problem": "Traditional attendance control systems are susceptible to fraud and require significant manual time for management.",
-        "decisions": "Angular was chosen for the frontend due to its robustness in enterprise applications. WebSocket enables real-time communication between camera and server. The Spring Boot backend processes facial data with ML service integration.",
-        "challenges": "Integrating real-time facial recognition flow with minimal latency was the biggest technical challenge. The solution involved data pipeline optimization via WebSocket.",
-        "results": "Functional system with recognition rate above 95% and average verification time under 2 seconds."
+        "slug": "confere-ai",
+        "title": "Confere AI",
+        "description": "Web application for attendance control with facial recognition, micro-expression analysis, and biometric metrics in real time.",
+        "stacks": ["React", "TypeScript", "Tailwind CSS", "Python", "ML Services", "REST API", "API Gemini", "WebRTC"],
+        "overview": "Confere AI is a computer vision-based attendance control platform. The application performs real-time facial detection, applies facial mesh (facial mesh), extracts biometric metrics, and enables emotional analysis by AI during the authentication process.",
+        "problem": "Traditional attendance control systems rely on manual authentication (card, password, or simple biometrics), which allows for fraud like marking by third parties and does not offer behavioral validation or contextual analysis of the user.",
+        "decisions": "Next.js was adopted to ensure structural organization and performance in the frontend. WebRTC enables real-time video capture directly in the browser. The use of Face Mesh allows accurate extraction of facial landmarks. The Spring Boot backend was structured to support authentication, record persistence, and future scalability with machine learning services.",
+        "challenges": "Ensuring low latency in facial mesh rendering and biometric metric processing was the main technical challenge. The solution involved optimized client-side processing and efficient control of the rendering cycle to maintain fluidity in real time.",
+        "results": "Functional system with real-time biometric authentication, dynamic display of facial metrics, and architecture prepared for expansion with advanced emotional analysis models."
       },
       {
         "slug": "acad-sheet",
