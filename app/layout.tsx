@@ -14,6 +14,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://melchisedeksl.vercel.app"),
   title: "Melchisedek Lima — Full Stack Developer",
   description:
     "Portfolio de Melchisedek Lima, Desenvolvedor Full Stack com foco em backend. Java, Spring Boot, PostgreSQL, Angular, React.",
@@ -47,6 +48,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // TODO: lang dinâmico via cookie/header quando i18n migrar para server-side
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>

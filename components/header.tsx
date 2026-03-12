@@ -14,14 +14,15 @@ import {
   SheetTrigger,
   SheetTitle,
 } from "@/components/ui/sheet"
+import { navItems } from "@/lib/nav-items"
 
-const navItems = [
-  { key: "about", href: "#sobre", icon: User },
-  { key: "experience", href: "#experiencia", icon: Briefcase },
-  { key: "skills", href: "#habilidades", icon: Code2 },
-  { key: "projects", href: "#projetos", icon: FolderKanban },
-  { key: "contact", href: "#contato", icon: Mail },
-]
+const navIcons: Record<(typeof navItems)[number]["key"], typeof User> = {
+  about: User,
+  experience: Briefcase,
+  skills: Code2,
+  projects: FolderKanban,
+  contact: Mail,
+}
 
 export function Header() {
   const { t, locale, setLocale } = useTranslation()
@@ -54,7 +55,7 @@ export function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div className="mx-auto flex h-14 sm:h-16 max-w-6xl items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16">
         <a
           href="#"
           className="flex items-center transition-opacity duration-200 hover:opacity-70"
@@ -147,7 +148,7 @@ export function Header() {
                   aria-label="Mobile navigation"
                 >
                   {navItems.map((item) => {
-                    const Icon = item.icon
+                    const Icon = navIcons[item.key]
                     return (
                       <a
                         key={item.key}

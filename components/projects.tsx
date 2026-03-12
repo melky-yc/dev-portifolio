@@ -2,12 +2,11 @@
 
 import { useTranslation, useI18n } from "@/lib/i18n"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, ClipboardList, ScanFace, FileSpreadsheet, LayoutGrid } from "lucide-react"
+import { LayoutGrid } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { projects } from "@/lib/projects"
+import { projects, getProjectDescription } from "@/lib/projects"
+import { ProjectCardEditorial } from "@/components/ProjectCardEditorial"
 
 const sectionHeader = {
   hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
@@ -22,43 +21,18 @@ const sectionHeader = {
 const gridContainer = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
   },
-}
-
-const cardReveal = {
-  hidden: { opacity: 0, y: 40, scale: 0.96, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const projectIcons: Record<string, React.ComponentType<{ className?: string }>> = {
-  "taskflow-reports": ClipboardList,
-  "confere-ai": ScanFace,
-  "acad-sheet": FileSpreadsheet,
-}
-
-interface ProjectItem {
-  slug: string
-  title: string
-  description: string
-  stacks: string[]
 }
 
 export function Projects() {
   const { t } = useTranslation()
-  const { messages } = useI18n()
-  const items = messages.projects.items as ProjectItem[]
+  const { locale } = useI18n()
 
   return (
     <section
       id="projetos"
-      className="py-24 px-6"
+      className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-8 lg:px-16"
       aria-labelledby="projects-title"
     >
       <div className="mx-auto max-w-6xl">
@@ -70,7 +44,7 @@ export function Projects() {
         >
           <h2
             id="projects-title"
-            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+            className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl"
           >
             {t("projects.title")}
           </h2>
@@ -80,73 +54,29 @@ export function Projects() {
         </motion.div>
 
         <motion.div
-          className="mt-12 grid gap-6 sm:grid-cols-2"
+          className="mt-10 sm:mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
           variants={gridContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {items.map((project) => {
-            const projectMeta = projects.find((p) => p.slug === project.slug)
-            const Icon = projectIcons[project.slug] || ClipboardList
-            const imageSrc = projectMeta?.image ? `/projects/${projectMeta.image}` : null
-            return (
-              <motion.div
-                key={project.slug}
-                variants={cardReveal}
-                className="h-full"
-              >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:border-muted-foreground/30 hover:shadow-lg"
-                >
-                  <div className="relative flex shrink-0 aspect-video items-center justify-center overflow-hidden bg-secondary">
-                    {imageSrc ? (
-                      <Image
-                        src={imageSrc}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <Icon className="h-12 w-12 text-muted-foreground transition-all duration-500 group-hover:scale-110 group-hover:text-foreground/70" />
-                    )}
-                    <div className="absolute inset-0 bg-foreground/0 transition-colors duration-300 group-hover:bg-foreground/5" />
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-6 min-h-0">
-                    <h3 className="text-lg font-semibold text-foreground">
-                      {project.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-                      {project.description}
-                    </p>
-                    <div className="mt-4 flex flex-1 flex-wrap content-start gap-2 min-h-[2.5rem]">
-                      {project.stacks.map((stack) => (
-                        <Badge
-                          key={stack}
-                          variant="outline"
-                          className="text-xs font-normal"
-                        >
-                          {stack}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="mt-6 flex shrink-0 items-center gap-1.5 text-sm font-medium text-foreground">
-                      {t("projects.view")}
-                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            )
-          })}
+          {projects.map((project) => (
+            <ProjectCardEditorial
+              key={project.slug}
+              slug={project.slug}
+              title={project.title}
+              description={getProjectDescription(project, locale)}
+              tags={project.tags}
+              logo={project.logo}
+              device={project.devices?.[0]?.type ?? project.device}
+              accentColor={project.accentColor}
+            />
+          ))}
         </motion.div>
 
         <motion.div
           className="mt-10 flex justify-center"
-          variants={cardReveal}
+          variants={gridContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}

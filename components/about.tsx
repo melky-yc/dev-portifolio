@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useTranslation } from "@/lib/i18n"
 import { motion } from "framer-motion"
 import {
@@ -9,36 +10,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { User, Code, Eye, GraduationCap } from "lucide-react"
+import {
+  fadeSlideUpBlur,
+  slideInLeft,
+  slideInRight,
+} from "@/lib/motion-variants"
 
-const sectionHeader = {
-  hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-  },
-}
-
-const slideInLeft = {
-  hidden: { opacity: 0, x: -40, filter: "blur(3px)" },
-  visible: {
-    opacity: 1,
-    x: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 },
-  },
-}
-
-const slideInRight = {
-  hidden: { opacity: 0, x: 40, filter: "blur(3px)" },
-  visible: {
-    opacity: 1,
-    x: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.3 },
-  },
-}
+const stats = [
+  { value: "2+", labelKey: "about.stats.experience" },
+  { value: "5+", labelKey: "about.stats.projects" },
+  { value: "Gov", labelKey: "about.stats.production" },
+] as const
 
 export function About() {
   const { t } = useTranslation()
@@ -51,26 +33,29 @@ export function About() {
   ]
 
   return (
-    <section id="sobre" className="py-24 px-6" aria-labelledby="about-title">
+    <section
+      id="sobre"
+      className="px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:px-16"
+      aria-labelledby="about-title"
+    >
       <div className="mx-auto max-w-6xl">
         <motion.div
-          variants={sectionHeader}
+          variants={fadeSlideUpBlur}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
+          custom={0}
         >
           <h2
             id="about-title"
-            className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+            className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl"
           >
             {t("about.title")}
           </h2>
-          <p className="mt-2 text-muted-foreground">
-            {t("about.subtitle")}
-          </p>
+          <p className="mt-2 text-muted-foreground">{t("about.subtitle")}</p>
         </motion.div>
 
-        <div className="mt-12 grid gap-12 md:grid-cols-5">
+        <div className="mt-10 grid gap-10 sm:mt-12 sm:gap-12 md:grid-cols-5">
           <motion.div
             className="flex flex-col items-center gap-5 md:col-span-2 md:items-start"
             variants={slideInLeft}
@@ -78,11 +63,15 @@ export function About() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="flex h-40 w-40 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-secondary text-foreground transition-transform duration-500 hover:scale-105 sm:h-44 sm:w-44">
-              <img
+            <div className="relative mx-auto h-44 w-44 md:h-52 md:w-52">
+              <div className="absolute inset-0 scale-110 rounded-full bg-indigo-500/20 blur-2xl" />
+              <Image
                 src="/photo/profile.png"
                 alt="Foto de Melchisedek Lima"
-                className="h-full w-full object-cover"
+                fill
+                priority
+                sizes="(max-width: 768px) 176px, 208px"
+                className="relative z-10 rounded-full object-cover ring-2 ring-white/10 dark:ring-white/10"
               />
             </div>
             <div className="text-center md:text-left">
@@ -92,6 +81,21 @@ export function About() {
               <p className="text-base text-muted-foreground sm:text-lg">
                 Desenvolvedor Full Stack
               </p>
+              <div className="mt-6 grid grid-cols-3 divide-x divide-border">
+                {stats.map((stat) => (
+                  <div
+                    key={stat.value}
+                    className="flex flex-col items-center gap-0.5 px-2"
+                  >
+                    <span className="text-xl font-bold text-foreground">
+                      {stat.value}
+                    </span>
+                    <span className="text-center text-[10px] leading-tight text-muted-foreground">
+                      {t(stat.labelKey)}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
 

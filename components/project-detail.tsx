@@ -3,8 +3,8 @@
 import { useTranslation, useI18n } from "@/lib/i18n"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { TagBadge } from "@/components/TagBadge"
 import {
   ArrowLeft,
   Github,
@@ -12,14 +12,22 @@ import {
   ClipboardList,
   ScanFace,
   FileSpreadsheet,
+  Smartphone,
 } from "lucide-react"
 import Link from "next/link"
-import { projects } from "@/lib/projects"
+import {
+  getProjectBySlug,
+  getProjectDescription,
+  getProjectLongDescription,
+} from "@/lib/projects"
+import { DeviceMockup } from "@/components/DeviceMockup"
+import { ImageGallery } from "@/components/ImageGallery"
 
 const projectIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "taskflow-reports": ClipboardList,
   "confere-ai": ScanFace,
   "acad-sheet": FileSpreadsheet,
+  "duofinance": Smartphone,
 }
 
 const fadeUp = {
@@ -36,49 +44,29 @@ const fadeUp = {
   }),
 }
 
-interface ProjectData {
-  slug: string
-  title: string
-  description: string
-  stacks: string[]
-  overview: string
-  problem: string
-  decisions: string
-  challenges: string
-  results: string
-}
-
 export function ProjectDetail({ slug }: { slug: string }) {
   const { t } = useTranslation()
-  const { messages } = useI18n()
+  const { locale } = useI18n()
 
-  const projectData = (messages.projects.items as ProjectData[]).find(
-    (p) => p.slug === slug
-  )
-  const projectMeta = projects.find((p) => p.slug === slug)
-
-  if (!projectData) {
+  const project = getProjectBySlug(slug)
+  if (!project) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted-foreground">Project not found.</p>
+        <p className="text-muted-foreground">{t("project_page.not_found")}</p>
       </div>
     )
   }
 
-  const Icon = projectIcons[slug] || ClipboardList
-  const imageSrc = projectMeta?.image ? `/projects/${projectMeta.image}` : null
+  const description = getProjectDescription(project, locale)
+  const longDescription = getProjectLongDescription(project, locale)
+  const hasMockup = !!(project.devices?.length || (project.device && project.screenshots?.length))
+  const hasGallery = (project.gallery?.length ?? 0) > 0
 
-  const sections = [
-    { key: "overview", title: t("project_page.overview"), text: projectData.overview },
-    { key: "problem", title: t("project_page.problem"), text: projectData.problem },
-    { key: "decisions", title: t("project_page.decisions"), text: projectData.decisions },
-    { key: "challenges", title: t("project_page.challenges"), text: projectData.challenges },
-    { key: "results", title: t("project_page.results"), text: projectData.results },
-  ]
+  const Icon = projectIcons[slug] || ClipboardList
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-6 py-12">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 md:px-8 py-10 sm:py-12">
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -94,26 +82,40 @@ export function ProjectDetail({ slug }: { slug: string }) {
           </Link>
         </motion.div>
 
-        <motion.div
-          className="relative mt-8 flex aspect-video items-center justify-center overflow-hidden rounded-lg bg-secondary"
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={1}
-        >
-          {imageSrc ? (
-            <Image
-              src={imageSrc}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, 672px"
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <Icon className="h-20 w-20 text-muted-foreground" />
-          )}
-        </motion.div>
+        {hasMockup && (
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={1}
+            className="mt-8"
+          >
+            <DeviceMockup project={project} />
+          </motion.div>
+        )}
+
+        {!hasMockup && (
+          <motion.div
+            className="relative mt-8 flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-secondary"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={1}
+          >
+            {project.logo ? (
+              <Image
+                src={project.logo}
+                alt={`Preview do projeto ${project.title}`}
+                fill
+                sizes="(max-width: 768px) 100vw, 672px"
+                className="object-contain rounded-xl p-8"
+                priority
+              />
+            ) : (
+              <Icon className="h-20 w-20 text-muted-foreground" />
+            )}
+          </motion.div>
+        )}
 
         <motion.h1
           className="mt-8 text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
@@ -122,7 +124,7 @@ export function ProjectDetail({ slug }: { slug: string }) {
           animate="visible"
           custom={2}
         >
-          {projectData.title}
+          {project.title}
         </motion.h1>
 
         <motion.div
@@ -132,25 +134,23 @@ export function ProjectDetail({ slug }: { slug: string }) {
           animate="visible"
           custom={3}
         >
-          {projectData.stacks.map((stack) => (
-            <Badge key={stack} variant="outline" className="font-normal">
-              {stack}
-            </Badge>
+          {project.tags.map((tag) => (
+            <TagBadge key={tag} tag={tag} size="md" />
           ))}
         </motion.div>
 
-        {projectMeta && (projectMeta.github || projectMeta.demo) && (
+        {(project.github || project.demo) && (
           <motion.div
-            className="mt-6 flex gap-3"
+            className="mt-6 flex flex-wrap gap-3"
             variants={fadeUp}
             initial="hidden"
             animate="visible"
             custom={4}
           >
-            {projectMeta.github && (
+            {project.github && (
               <Button asChild variant="outline" size="sm" className="gap-2">
                 <a
-                  href={projectMeta.github}
+                  href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -159,10 +159,10 @@ export function ProjectDetail({ slug }: { slug: string }) {
                 </a>
               </Button>
             )}
-            {projectMeta.demo && (
+            {project.demo && (
               <Button asChild variant="outline" size="sm" className="gap-2">
                 <a
-                  href={projectMeta.demo}
+                  href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -174,31 +174,45 @@ export function ProjectDetail({ slug }: { slug: string }) {
           </motion.div>
         )}
 
-        <div className="mt-12 flex flex-col gap-10">
-          {sections.map((section, i) => (
-            <motion.div
-              key={section.key}
-              variants={fadeUp}
-              initial="hidden"
-              animate="visible"
-              custom={5 + i}
-            >
-              <h2 className="text-lg font-semibold text-foreground">
-                {section.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {section.text}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          className="mt-12"
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          custom={5}
+        >
+          <h2 className="text-lg font-semibold text-foreground">
+            {t("project_page.overview")}
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
+            {longDescription}
+          </p>
+        </motion.div>
+
+        {hasGallery && (
+          <motion.div
+            className="mt-12"
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={10}
+          >
+            <h2 className="mb-4 text-lg font-semibold text-foreground">
+              {t("project_page.gallery")}
+            </h2>
+            <ImageGallery
+              images={project.gallery!}
+              projectName={project.title}
+            />
+          </motion.div>
+        )}
 
         <motion.div
           className="mt-16 border-t border-border pt-8"
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          custom={10}
+          custom={11}
         >
           <Link
             href="/#projetos"
