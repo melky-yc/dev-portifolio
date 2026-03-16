@@ -97,30 +97,31 @@ export function Contact() {
   return (
     <section
       id="contato"
-      className="px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:px-16"
+      className="px-4 sm:px-6 md:px-8 lg:px-16 py-16 md:py-24"
       aria-labelledby="contact-title"
     >
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto w-full max-w-6xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           {/* Coluna esquerda: título + cards de contato */}
-          <div>
+          <div className="text-left">
             <motion.div
-              className="text-center lg:text-left"
               variants={fadeSlideUpBlur}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={0}
             >
-              <h2
-                id="contact-title"
-                className="text-balance text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl"
-              >
-                {t("contact.headline")}
-              </h2>
-              <p className="mt-3 text-pretty text-muted-foreground">
-                {t("contact.subtitle")}
-              </p>
+              <div className="mb-12 md:mb-16">
+                <h2
+                  id="contact-title"
+                  className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl"
+                >
+                  {t("contact.headline")}
+                </h2>
+                <p className="mt-1.5 text-sm text-muted-foreground">
+                  {t("contact.subtitle")}
+                </p>
+              </div>
             </motion.div>
 
             <motion.div
@@ -158,7 +159,7 @@ export function Contact() {
 
           {/* Coluna direita: formulário */}
           <motion.form
-            className="flex flex-col gap-4"
+            className="mt-12 lg:mt-20 flex flex-col gap-4"
             variants={formReveal}
             initial="hidden"
             whileInView="visible"

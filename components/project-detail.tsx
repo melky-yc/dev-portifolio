@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import { useTranslation, useI18n } from "@/lib/i18n"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { TagBadge } from "@/components/TagBadge"
+import { useEffect, useState } from "react";
+import { useTranslation, useI18n } from "@/lib/i18n";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { TagBadge } from "@/components/TagBadge";
 import {
   ArrowLeft,
   Github,
@@ -13,22 +14,22 @@ import {
   ScanFace,
   FileSpreadsheet,
   Smartphone,
-} from "lucide-react"
-import Link from "next/link"
+} from "lucide-react";
+import Link from "next/link";
 import {
-  getProjectBySlug,
   getProjectDescription,
   getProjectLongDescription,
-} from "@/lib/projects"
-import { DeviceMockup } from "@/components/DeviceMockup"
-import { ImageGallery } from "@/components/ImageGallery"
+  type Project,
+} from "@/lib/projects";
+import { DeviceMockup } from "@/components/DeviceMockup";
+import { ImageGallery } from "@/components/ImageGallery";
 
 const projectIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   "taskflow-reports": ClipboardList,
   "confere-ai": ScanFace,
   "acad-sheet": FileSpreadsheet,
   "duofinance": Smartphone,
-}
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
@@ -42,27 +43,49 @@ const fadeUp = {
       ease: [0.22, 1, 0.36, 1],
     },
   }),
-}
+};
 
 export function ProjectDetail({ slug }: { slug: string }) {
-  const { t } = useTranslation()
-  const { locale } = useI18n()
+  const { t } = useTranslation();
+  const { locale } = useI18n();
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const project = getProjectBySlug(slug)
+  useEffect(() => {
+    setLoading(true);
+    fetch(`/api/projects/${slug}`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+      .then((data: Project) => {
+        setProject(data);
+      })
+      .catch(() => {
+        setProject(null);
+      })
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-muted border-t-indigo-500" />
+      </div>
+    );
+  }
+
   if (!project) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <p className="text-muted-foreground">{t("project_page.not_found")}</p>
       </div>
-    )
+    );
   }
 
-  const description = getProjectDescription(project, locale)
-  const longDescription = getProjectLongDescription(project, locale)
-  const hasMockup = !!(project.devices?.length || (project.device && project.screenshots?.length))
-  const hasGallery = (project.gallery?.length ?? 0) > 0
+  const description = getProjectDescription(project, locale);
+  const longDescription = getProjectLongDescription(project, locale);
+  const hasMockup = !!(project.devices?.length || (project.device && project.screenshots?.length));
+  const hasGallery = (project.gallery?.length ?? 0) > 0;
 
-  const Icon = projectIcons[slug] || ClipboardList
+  const Icon = projectIcons[slug] || ClipboardList;
 
   return (
     <div className="min-h-screen bg-background">

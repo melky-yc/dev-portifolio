@@ -84,7 +84,7 @@ export function ProjectCardEditorial({
       />
 
       {/* ── Topo: tags + device ───────────────────────────────────────────── */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-4 pb-0 pt-4 sm:px-5 sm:pt-5">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-4 pb-0 pt-4 sm:px-5 sm:pt-5 min-h-[40px]">
         <div className="flex flex-wrap items-center gap-2 min-w-0">
           {tags.slice(0, 3).map((tag) => (
             <TagBadge key={tag} tag={tag} size="sm" />
@@ -125,7 +125,7 @@ export function ProjectCardEditorial({
               src={logo}
               alt={`${title} logo`}
               fill
-              className="object-contain p-2"
+              className="h-full w-full object-cover"
               sizes="56px"
             />
           ) : (

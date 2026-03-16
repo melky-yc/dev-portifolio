@@ -3,9 +3,22 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { Building2, ExternalLink, Star, Shield, Briefcase, GraduationCap, Wrench } from "lucide-react";
+import { Building2, ExternalLink, Star, Shield, Briefcase, GraduationCap, Wrench, Layers, Lock, Monitor } from "lucide-react";
+import { TagBadge } from "@/components/TagBadge";
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
+
+export interface ExperienceSystem {
+  id: string;
+  name: string;
+  logo_url?: string;
+  screenshot_url?: string;
+  role: string;
+  involvement_type: "dev" | "support" | "training" | "mixed";
+  description?: string;
+  tags: string[];
+  confidential: boolean;
+}
 
 export interface ExperienceItem {
   id: string;
@@ -21,6 +34,7 @@ export interface ExperienceItem {
   featured?: boolean;                     // destaque especial (ex: gov, grande empresa)
   featuredLabel?: string;                  // ex: "Nível Governamental", "Produto em Produção"
   link?: string;                          // link externo da empresa
+  systems?: ExperienceSystem[];           // sistemas trabalhados nesta experiência
 }
 
 // ─── Ícone por tipo ──────────────────────────────────────────────────────────
@@ -31,12 +45,87 @@ const typeConfig = {
   support:  { icon: Wrench,        color: "text-amber-400",   bg: "bg-amber-400/10"  },
 };
 
+const involvementConfig = {
+  dev:      { label: "Desenvolvimento", color: "text-blue-400",    bg: "bg-blue-400/10"    },
+  support:  { label: "Suporte",         color: "text-amber-400",   bg: "bg-amber-400/10"   },
+  training: { label: "Capacitação",     color: "text-emerald-400", bg: "bg-emerald-400/10" },
+  mixed:    { label: "Misto",           color: "text-violet-400", bg: "bg-violet-400/10"  },
+};
+
+// ─── Card de sistema (dentro de uma experiência) ──────────────────────────────
+
+function ExperienceSystemCard({ system }: { system: ExperienceSystem }) {
+  const config = involvementConfig[system.involvement_type] ?? involvementConfig.dev;
+
+  return (
+    <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-gray-50/50 dark:bg-white/[0.02] p-3 transition-all hover:border-gray-300 dark:hover:border-white/10">
+      <div className="flex items-start gap-3">
+        <div className="shrink-0 w-8 h-8 rounded-lg overflow-hidden border border-gray-200 dark:border-white/8 bg-gray-100 dark:bg-white/5 flex items-center justify-center">
+          {system.logo_url ? (
+            <Image
+              src={system.logo_url}
+              alt=""
+              width={32}
+              height={32}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <Monitor size={14} className="text-gray-400 dark:text-white/30" />
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-semibold text-foreground leading-tight">
+              {system.name}
+            </span>
+            <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-semibold ${config.bg} ${config.color}`}>
+              {config.label}
+            </span>
+            {system.confidential && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-red-500/10 border border-red-500/20 text-red-400 dark:text-red-400 text-[9px] font-semibold">
+                <Lock size={8} />
+                Confidencial
+              </span>
+            )}
+          </div>
+          {system.role && (
+            <p className="text-[10px] text-muted-foreground mt-0.5">{system.role}</p>
+          )}
+          {system.description && (
+            <p className="text-[11px] text-muted-foreground leading-relaxed mt-1.5">
+              {system.description}
+            </p>
+          )}
+          {!system.confidential && system.screenshot_url && (
+            <div className="mt-2 rounded-lg overflow-hidden border border-gray-200 dark:border-white/8 w-full aspect-video relative">
+              <Image
+                src={system.screenshot_url}
+                alt={`Tela inicial — ${system.name}`}
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+          )}
+          {system.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-2">
+              {system.tags.map((tag) => (
+                <TagBadge key={tag} tag={tag} size="sm" />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Card Individual ─────────────────────────────────────────────────────────
 
-function ExperienceCard({ item, index, side }: {
+function ExperienceCard({ item, index, side, compact = false }: {
   item: ExperienceItem;
   index: number;
   side: "left" | "right";
+  compact?: boolean;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -50,10 +139,12 @@ function ExperienceCard({ item, index, side }: {
       initial={{ opacity: 0, x: side === "left" ? -40 : 40 }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.55, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`relative flex w-full min-w-0 ${side === "left" ? "justify-start pr-12 md:pr-24" : "justify-end pl-12 md:pl-24"}`}
+      className={`relative flex w-full min-w-0 ${compact ? "justify-stretch" : side === "left" ? "justify-start pr-12 md:pr-24" : "justify-end pl-12 md:pl-24"}`}
     >
-      {/* Conector até a linha central */}
-      <div className={`absolute top-8 ${side === "left" ? "right-0 -mr-px" : "left-0 -ml-px"} w-12 md:w-24 h-px bg-gradient-to-r ${side === "left" ? "from-transparent to-border" : "from-border to-transparent"}`} />
+      {/* Conector até a linha central — só no desktop */}
+      {!compact && (
+        <div className={`absolute top-8 ${side === "left" ? "right-0 -mr-px" : "left-0 -ml-px"} w-12 md:w-24 h-px bg-gradient-to-r ${side === "left" ? "from-transparent to-border" : "from-border to-transparent"}`} />
+      )}
 
       {/* Card — ocupa a largura disponível da coluna (sem max-width restritivo) */}
       <div className={`group relative w-full min-w-0 rounded-2xl border transition-all duration-300
@@ -79,7 +170,7 @@ function ExperienceCard({ item, index, side }: {
                   alt={`Logo ${item.company}`}
                   width={44}
                   height={44}
-                  className="object-contain p-1.5"
+                  className="h-full w-full object-cover"
                   onError={() => setLogoError(true)}
                 />
               ) : (
@@ -150,6 +241,21 @@ function ExperienceCard({ item, index, side }: {
               ))}
             </div>
           )}
+
+          {/* Sistemas trabalhados */}
+          {item.systems && item.systems.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/5">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 dark:text-white/40 mb-3 flex items-center gap-1.5">
+                <Layers size={10} />
+                Sistemas que trabalhei
+              </p>
+              <div className="flex flex-col gap-2">
+                {item.systems.map((system) => (
+                  <ExperienceSystemCard key={system.id} system={system} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -158,7 +264,7 @@ function ExperienceCard({ item, index, side }: {
 
 // ─── Dot central na linha ────────────────────────────────────────────────────
 
-function TimelineDot({ featured, period, index }: { featured?: boolean; period: string; index: number }) {
+function TimelineDot({ featured, period, index, absolute = true }: { featured?: boolean; period: string; index: number; absolute?: boolean }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -168,7 +274,7 @@ function TimelineDot({ featured, period, index }: { featured?: boolean; period: 
       initial={{ opacity: 0, scale: 0.5 }}
       animate={inView ? { opacity: 1, scale: 1 } : {}}
       transition={{ duration: 0.4, delay: index * 0.08 + 0.1 }}
-      className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+      className={`flex flex-col items-center gap-2 z-10 shrink-0 ${absolute ? "absolute left-1/2 -translate-x-1/2 hidden md:flex" : "relative"}`}
     >
       {/* Período */}
       <span className="text-[10px] text-muted-foreground font-mono tracking-wider whitespace-nowrap hidden md:block">
@@ -204,15 +310,15 @@ interface ExperienceTimelineProps {
 
 export default function ExperienceTimeline({ experiences, title = "Experiência", subtitle = "Minha trajetória profissional" }: ExperienceTimelineProps) {
   return (
-    <section id="experiencia" className="relative py-16 sm:py-20 px-4 sm:px-6 md:px-8 lg:px-16" aria-labelledby="experience-title">
-      <div className="max-w-6xl mx-auto">
+    <section id="experiencia" className="relative px-4 sm:px-6 md:px-8 lg:px-16 py-16 md:py-24" aria-labelledby="experience-title">
+      <div className="mx-auto w-full max-w-6xl">
 
-        {/* Título da seção */}
-        <div className="mb-12 md:mb-16">
-          <h2 id="experience-title" className="text-2xl font-bold text-foreground sm:text-3xl">
+        {/* Bloco de título de seção — padrão único */}
+        <div className="mb-12 md:mb-16 text-left">
+          <h2 id="experience-title" className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
             {title}
           </h2>
-          <p className="text-muted-foreground mt-1 text-sm">{subtitle}</p>
+          <p className="mt-1.5 text-sm text-muted-foreground">{subtitle}</p>
         </div>
 
         {/* Timeline wrapper */}
@@ -227,28 +333,33 @@ export default function ExperienceTimeline({ experiences, title = "Experiência"
               const side = index % 2 === 0 ? "left" : "right";
 
               return (
-                <div key={item.id} className="relative flex items-start md:gap-0">
+                <div key={item.id} className="relative flex items-start md:gap-0 min-h-[1px]">
 
-                  {/* Lado esquerdo — card usa toda a largura da coluna */}
+                  {/* Desktop: lado esquerdo — card usa toda a largura da coluna */}
                   <div className={`hidden md:flex w-1/2 min-w-0 justify-start ${side === "left" ? "" : "opacity-0 pointer-events-none"}`}>
                     {side === "left" && (
                       <ExperienceCard item={item} index={index} side="left" />
                     )}
                   </div>
 
-                  {/* Dot central */}
-                  <TimelineDot featured={item.featured} period={item.period} index={index} />
+                  {/* Desktop: dot central (absolute) */}
+                  <TimelineDot featured={item.featured} period={item.period} index={index} absolute />
 
-                  {/* Lado direito — card usa toda a largura da coluna */}
+                  {/* Desktop: lado direito — card usa toda a largura da coluna */}
                   <div className={`hidden md:flex w-1/2 min-w-0 justify-end ${side === "right" ? "" : "opacity-0 pointer-events-none"}`}>
                     {side === "right" && (
                       <ExperienceCard item={item} index={index} side="right" />
                     )}
                   </div>
 
-                  {/* Mobile: todos empilhados */}
-                  <div className="flex md:hidden w-full">
-                    <ExperienceCard item={item} index={index} side="right" />
+                  {/* Mobile: dot à esquerda + card à direita, alinhados */}
+                  <div className="flex md:hidden w-full gap-3 items-start">
+                    <div className="pt-2 shrink-0">
+                      <TimelineDot featured={item.featured} period={item.period} index={index} absolute={false} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <ExperienceCard item={item} index={index} side="right" compact />
+                    </div>
                   </div>
                 </div>
               );

@@ -1,22 +1,41 @@
-"use client"
+"use client";
 
-import { useTranslation, useI18n } from "@/lib/i18n"
-import { motion } from "framer-motion"
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
-import { projects, getProjectDescription } from "@/lib/projects"
-import { ProjectCardEditorial } from "@/components/ProjectCardEditorial"
+import { useEffect, useState } from "react";
+import { useTranslation, useI18n } from "@/lib/i18n";
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import {
+  projects as staticProjects,
+  getProjectDescription,
+  type Project,
+} from "@/lib/projects";
+import { ProjectCardEditorial } from "@/components/ProjectCardEditorial";
 
 const gridContainer = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.1, delayChildren: 0.05 },
   },
-}
+};
 
 export function ProjectsAll() {
-  const { t } = useTranslation()
-  const { locale } = useI18n()
+  const { t } = useTranslation();
+  const { locale } = useI18n();
+  const [projects, setProjects] = useState<Project[]>(staticProjects);
+
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+      .then((data: Project[]) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProjects(data);
+        }
+      })
+      .catch(() => {
+        // fallback estático
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -67,5 +86,5 @@ export function ProjectsAll() {
         </motion.div>
       </div>
     </div>
-  )
+  );
 }

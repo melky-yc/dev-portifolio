@@ -35,7 +35,7 @@ function PhoneMockup({
             alt={alt}
             fill
             sizes="260px"
-            className="object-cover object-top rounded-[36px]"
+            className="object-contain rounded-[36px]"
             priority={priority}
             loading={priority ? undefined : "lazy"}
             draggable={false}
@@ -62,13 +62,14 @@ function LaptopMockup({
       <div className="w-[560px] max-w-[100vw] bg-[#1e1e1e] rounded-t-xl border-2 border-[#3a3a3a] border-b-0 p-3.5 pt-3 pb-2 shadow-[0_-4px_20px_rgba(0,0,0,0.4),inset_0_0_0_1px_#2a2a2a]">
         <div className="relative bg-[#0a0a0a] rounded-md overflow-hidden">
           <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#333] rounded-full z-[5]" />
-          <div className="w-full aspect-[16/10] overflow-hidden rounded-md bg-black relative">
+          {/* Usa proporção 16:9 para encaixar screenshots 1920x1080 sem cortes */}
+          <div className="w-full aspect-video overflow-hidden rounded-md bg-black relative">
             <Image
               src={screenshot}
               alt={alt}
               fill
               sizes="(max-width: 768px) 448px, 560px"
-              className="object-cover object-top rounded-md"
+              className="object-contain rounded-md"
               priority={priority}
               loading={priority ? undefined : "lazy"}
               draggable={false}
@@ -104,7 +105,7 @@ function TabletMockup({
             alt={alt}
             fill
             sizes="340px"
-            className="object-cover object-top rounded-[16px]"
+            className="object-contain rounded-[16px]"
             priority={priority}
             loading={priority ? undefined : "lazy"}
             draggable={false}
