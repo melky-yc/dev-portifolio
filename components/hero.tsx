@@ -19,7 +19,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative flex min-h-[100vh] flex-col items-center justify-center px-4 sm:px-6 md:px-8"
+      className="relative flex min-h-screen flex-col items-center justify-center px-4 sm:px-6 md:px-8"
       aria-label="Hero"
     >
       {/* Glow radial de fundo — funciona em dark e light */}
@@ -107,7 +107,7 @@ export function Hero() {
             </a>
           </Button>
           <Button asChild variant="outline" size="lg" className="w-full gap-2 sm:w-auto">
-            <Link href="/pdf/cv-melchisedeksl.pdf" target="_blank">
+            <Link href="/cv" target="_blank">
               {t("hero.cta_cv")}
               <Download className="h-4 w-4" />
             </Link>

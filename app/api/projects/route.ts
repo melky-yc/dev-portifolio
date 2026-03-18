@@ -1,18 +1,11 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createSupabaseOrErrorResponse } from "@/app/api/_utils/supabase";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+export const runtime = "nodejs";
 
 export async function GET() {
-  if (!supabaseUrl || !supabaseAnonKey) {
-    return NextResponse.json(
-      { error: "Supabase não configurado" },
-      { status: 503 }
-    );
-  }
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  const { supabase, response } = createSupabaseOrErrorResponse();
+  if (response) return response;
 
   const { data, error } = await supabase
     .from("projects")
